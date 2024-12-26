@@ -38,5 +38,10 @@ namespace BAL.Services
                 throw;
             }
         }
+
+        public Task<IEnumerable<Users>> GetSaleReports()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

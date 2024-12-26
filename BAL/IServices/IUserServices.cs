@@ -1,4 +1,5 @@
 ﻿using Model.DTOs;
+using Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,10 @@ namespace BAL.IServices
     public interface IUserServices
     {
         Task CreateUser(CreateUserDTOs inputModel);
+        Task<IEnumerable<Users>> GetSaleReports();
+        //Task<Users> GetSaleReportById(Guid id);
+        //Task UpdateUser(UpdateUserDTOs inputModel);
+        //Task DeleteUser(Guid id);
+
     }
 }
