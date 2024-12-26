@@ -1,6 +1,6 @@
 ﻿namespace Repo.Repositories
 {
-    internal class GenericRepository
+    internal class GenericRepository<T> : IGenericRepository<T> where T : class
     {
     }
 }
