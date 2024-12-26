@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using Model.DTOs;
+using Model.Entities;
 using Repo.UnitOfWork;
 using System.Net.NetworkInformation;
 using static Model.ApplicationConfig.ResponseModel;
@@ -36,5 +37,25 @@ namespace ATMManagementSystem.Controllers
                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error }); 
             }
         }
+
+        [HttpGet("GetAllUsers")]
+
+        public async Task <IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var userList = await _userServices.GetAllUsers();
+                var activeUsers = userList.Where(p => p.ActiveFlag == true).ToList();
+
+                return Ok(new ResponseModel { Message = "Add Sucessfully", status = APIStatus.Successful, Data = activeUsers });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        } 
+
     }
 }
