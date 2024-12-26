@@ -1,6 +1,10 @@
-﻿namespace Repo.UnitOfWork
+﻿using Repo.Repositories.IRepositories;
+
+namespace Repo.UnitOfWork
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
+        IUserRepository User {  get; }
+        Task<int> SaveChangesAsync();
     }
 }

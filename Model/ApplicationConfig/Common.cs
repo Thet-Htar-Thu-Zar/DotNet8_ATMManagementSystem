@@ -7,5 +7,7 @@
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
         public bool? IsLocked { get; set; } = false;
+        public bool? ActiveFlag { get; set; } = true;
+
     }
 }

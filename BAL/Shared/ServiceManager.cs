@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BAL.IServices;
+using BAL.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Model;
 using Model.ApplicationConfig;
+using Repo.Repositories.IRepositories;
+using Repo.UnitOfWork;
 
 namespace BAL.Shared
 {
@@ -9,11 +13,12 @@ namespace BAL.Shared
     {
         public static void SetServicesInfo(IServiceCollection services, Appsetting appSettings)
         {
-            services.AddDbContextPool<DataContext>(Options =>
+            services.AddDbContextPool<DataContext>(options =>
             {
-                Options.UseSqlServer(appSettings.ConnectionStrings);
+                options.UseSqlServer(appSettings.ConnectionStrings);
             });
-            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserServices, UserServices>();
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Model.Entities
         public Guid UserID { get; set; } = new Guid();
         public string? Password { get; set; }
         public string? UserName { get; set; }
-        public string? AccountNo { get; set;}
         public decimal? Amount { get; set;}
     }
 }
