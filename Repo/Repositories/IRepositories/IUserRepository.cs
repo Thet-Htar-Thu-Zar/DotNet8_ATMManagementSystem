@@ -1,6 +1,8 @@
-﻿namespace Repo.Repositories.IRepositories
+﻿using Model.Entities;
+
+namespace Repo.Repositories.IRepositories
 {
-    internal interface IUserRepository
+    public interface IUserRepository : IGenericRepository<Users>
     {
     }
 }
