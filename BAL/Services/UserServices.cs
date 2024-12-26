@@ -49,5 +49,29 @@ namespace BAL.Services
             }
             return lst;
         }
+
+        public async Task<Users> GetUserById(Guid id)
+        {
+            try
+            {
+                var userlst = (await _unitOfWork.User.GetByCondition(x => x.UserID == id)).FirstOrDefault();
+
+                if (userlst is null)
+                {
+                    throw new Exception("Sale report doesn't exist....");
+                }
+                if (userlst.ActiveFlag != true)
+                {
+                    throw new Exception("Sale report doesn't exist....");
+
+                }
+
+                return userlst;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
