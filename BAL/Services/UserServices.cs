@@ -39,6 +39,24 @@ namespace BAL.Services
             }
         }
 
+        public async Task DeleteUser(Guid id)
+        {
+            try
+            {
+                var user_data = (await _unitOfWork.User.GetByCondition(x => x.UserID == id)).FirstOrDefault();
+                if (user_data != null)
+                {
+                    user_data.ActiveFlag = false;
+
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<Users>> GetAllUsers()
         {
             var lst = await _unitOfWork.User.GetByCondition(x => x.ActiveFlag == true);
@@ -67,6 +85,28 @@ namespace BAL.Services
                 }
 
                 return userlst;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateUser(UpdateUserDTOs inputModel)
+        {
+            try
+            {
+                var user_data = (await _unitOfWork.User.GetByCondition(x => x.UserID == inputModel.UserID)).FirstOrDefault();
+                if (user_data != null)
+                {
+                    user_data.UserName = inputModel.UserName;
+                    user_data.Password = inputModel.Password;
+                    user_data.Amount = inputModel.Amount;
+                    user_data.UpdatedBy = "Admin";
+                    user_data.UpdatedDate = DateTime.UtcNow;
+                    _unitOfWork.User.Update(user_data);
+                }
+                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception)
             {

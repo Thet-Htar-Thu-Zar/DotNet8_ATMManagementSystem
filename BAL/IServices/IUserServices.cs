@@ -13,8 +13,8 @@ namespace BAL.IServices
         Task CreateUser(CreateUserDTOs inputModel);
         Task<IEnumerable<Users>> GetAllUsers();
         Task<Users> GetUserById(Guid id);
-        //Task UpdateUser(UpdateUserDTOs inputModel);
-        //Task DeleteUser(Guid id);
+        Task UpdateUser(UpdateUserDTOs inputModel);
+        Task DeleteUser(Guid id);
 
     }
 }
