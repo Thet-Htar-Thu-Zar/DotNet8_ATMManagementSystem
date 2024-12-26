@@ -73,5 +73,37 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [HttpPost("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UpdateUserDTOs inputModel)
+        {
+            try
+            {
+                await _userServices.UpdateUser(inputModel);
+                return Ok(new ResponseModel { Message = "Update Sucessfully", status = APIStatus.Successful });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
+
+        [HttpDelete("DeleteUser")]
+
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            try
+            {
+                await _userServices.DeleteUser(id);
+                return Ok(new ResponseModel { Message = "Delete Sucessfully", status = APIStatus.Successful });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
     }
 }
