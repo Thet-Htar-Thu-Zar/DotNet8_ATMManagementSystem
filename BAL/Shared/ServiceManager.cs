@@ -1,6 +1,17 @@
-﻿namespace BAL.Shared
+﻿using Microsoft.Extensions.Options;
+using Model.ApplicationConfig;
+
+namespace BAL.Shared
 {
-    internal class ServiceManager
+    public class ServiceManager
     {
+        public static void SetServicesInfo(IServiceCollection services, Appsetting appSettings)
+        {
+            services.AddDbContextPool<DataContext>(Options =>
+            {
+                Options.UseSqlServer(appSettings.ConnectionStrings);
+            });
+            
+        }
     }
 }
