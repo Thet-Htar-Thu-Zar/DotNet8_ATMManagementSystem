@@ -39,9 +39,15 @@ namespace BAL.Services
             }
         }
 
-        public Task<IEnumerable<Users>> GetSaleReports()
+        public async Task<IEnumerable<Users>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var lst = await _unitOfWork.User.GetByCondition(x => x.ActiveFlag == true);
+
+            if(lst == null || !lst.Any())
+            {
+                throw new Exception("No active user list...");
+            }
+            return lst;
         }
     }
 }
