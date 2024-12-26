@@ -1,6 +1,7 @@
 ﻿namespace Model.ApplicationConfig
 {
-    internal class Appsetting
+    public class Appsetting
     {
+        public string? ConnectionStrings { get; set; }
     }
 }
