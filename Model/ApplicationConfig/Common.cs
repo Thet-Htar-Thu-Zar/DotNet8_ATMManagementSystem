@@ -1,6 +1,11 @@
 ﻿namespace Model.ApplicationConfig
 {
-    internal class Common
+    public class Common
     {
+        public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedDate { get; set;} = DateTime.UtcNow;
+        public string? CreatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
+        public bool? IsLocked { get; set; } = false;
     }
 }
