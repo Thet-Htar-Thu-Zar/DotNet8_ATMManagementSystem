@@ -1,3 +1,4 @@
+using BAL.Shared;
 using Model.ApplicationConfig;
 
 var builder = WebApplication.CreateBuilder(args);
