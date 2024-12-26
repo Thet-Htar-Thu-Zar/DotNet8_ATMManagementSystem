@@ -55,7 +55,23 @@ namespace ATMManagementSystem.Controllers
                 return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
 
             }
-        } 
+        }
+
+        [HttpGet("GetUserById")]
+
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            try
+            {
+                var users = await _userServices.GetUserById(id);
+
+                return Ok(new ResponseModel { Message = "User Record display successfully", status = APIStatus.Successful, Data = users });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+        }
 
     }
 }
