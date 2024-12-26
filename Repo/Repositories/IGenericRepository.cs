@@ -12,7 +12,7 @@ namespace Repo.Repositories
         Task AddMultiple (IEnumerable<T> entity);
         void Update(T entity);
         void UpdateMultiple (IEnumerable<T> entity);
-        void Delete(Guid id);
+        void Delete(T entity);
         void DeleteMultiple (IEnumerable<T> entity);
         Task <IEnumerable<T>> GetByCondition (Expression<Func<T, bool>> expression);
         Task<IEnumerable<T>> GetByConditionWithPagination(Expression<Func<T, bool>> expression, int page, int pageSize);
