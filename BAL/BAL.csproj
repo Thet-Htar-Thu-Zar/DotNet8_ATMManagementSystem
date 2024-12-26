@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="IServices\" />
-    <Folder Include="Shared\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

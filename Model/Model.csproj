@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationConfig\" />
     <Folder Include="DTOs\" />
     <Folder Include="Entities\" />
   </ItemGroup>
