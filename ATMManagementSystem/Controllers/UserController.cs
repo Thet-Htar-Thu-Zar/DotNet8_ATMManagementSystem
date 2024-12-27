@@ -39,7 +39,6 @@ namespace ATMManagementSystem.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-
         public async Task <IActionResult> GetAllUsers()
         {
             try
