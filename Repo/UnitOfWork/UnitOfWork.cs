@@ -15,8 +15,10 @@ namespace Repo.UnitOfWork
             _context = context;
             Appsetting = appsettings.Value;
             User = new UserRepository(context);
+            StoreFile = new FileRepository(context);
         }
         public IUserRepository User { get; set; }
+        public IFileRepository StoreFile { get; set; }
         public Appsetting Appsetting { get; set; }
         public void Dispose()
         {

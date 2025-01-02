@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BAL.IServices;
+using Microsoft.AspNetCore.Http;
+using Repo.Repositories.IRepositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace BAL.Services
 {
-    internal class FileServices
+    public class FileServices : IFileServices
     {
+        public Task<string> FileUpload(IFormFile File)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
