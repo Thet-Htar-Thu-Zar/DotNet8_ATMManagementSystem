@@ -57,7 +57,6 @@ namespace ATMManagementSystem.Controllers
         }
 
         [HttpGet("GetUserById")]
-
         public async Task<IActionResult> GetUserById(Guid id)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using BAL.IServices;
+using Model.ApplicationConfig;
 using Model.DTOs;
 using Model.Entities;
 using Repo.UnitOfWork;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Model.ApplicationConfig.ResponseModel;
 
 namespace BAL.Services
 {
@@ -18,7 +20,6 @@ namespace BAL.Services
         {
             _unitOfWork = unitOfWork;
         }
-
         public async Task CreateUser(CreateUserDTOs inputModel)
         {
             try
@@ -97,6 +98,11 @@ namespace BAL.Services
             try
             {
                 var user_data = (await _unitOfWork.User.GetByCondition(x => x.UserID == inputModel.UserID)).FirstOrDefault();
+
+                if (user_data.ActiveFlag != true)
+                {
+                    throw new Exception("User is not active..");
+                }
                 if (user_data != null)
                 {
                     user_data.UserName = inputModel.UserName;
