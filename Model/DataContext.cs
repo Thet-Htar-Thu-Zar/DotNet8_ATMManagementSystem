@@ -11,5 +11,6 @@ namespace Model
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Users> User { get; set; }
+        public DbSet<Files> StoredFile { get; set; }
     }
 }

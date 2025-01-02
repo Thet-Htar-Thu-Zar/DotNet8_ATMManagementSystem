@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Model;
 using Model.ApplicationConfig;
-using Repo.Repositories.IRepositories;
 using Repo.UnitOfWork;
 
 namespace BAL.Shared

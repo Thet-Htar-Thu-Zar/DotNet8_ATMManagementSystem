@@ -12,5 +12,7 @@ namespace Model.Entities
         public string? Password { get; set; }
         public string? UserName { get; set; }
         public decimal? Amount { get; set;}
+        public bool? IsLocked { get; set; } = false;
+
     }
 }
