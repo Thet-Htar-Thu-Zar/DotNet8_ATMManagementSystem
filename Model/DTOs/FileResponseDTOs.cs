@@ -9,7 +9,7 @@ namespace Model.DTOs
     public class FileResponseDTOs
     {
         public Stream? Content { get; set; }
-        public string? File_Name { get; set; }
+        public string? FileName { get; set; }
         public string? Content_Type { get; set; }
     }
 }

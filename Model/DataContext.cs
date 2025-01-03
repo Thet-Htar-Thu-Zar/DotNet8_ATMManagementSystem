@@ -9,6 +9,10 @@ namespace Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.Property(e => e.Amount).HasColumnType("decimal(18,4)"); 
+            });
         }
         public DbSet<Users> User { get; set; }
         public DbSet<Files> StoredFile { get; set; }
