@@ -71,5 +71,26 @@ namespace ATMManagementSystem.Controllers
                 return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
             }
         }
+
+        [HttpGet("DownloadFile")]
+        public async Task<IActionResult> DownloadFile(string fileName)
+        {
+            try
+            {
+                var result = await _fileServices.DownloadFile(fileName);
+
+                if(result is not null)
+                {
+                    return File(result.Content, result.Content_Type, result.FileName);
+                }
+                return Ok(new ResponseModel { Message = Messages.ErrorWhileFetchingData , status = APIStatus.Error });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
     }
 }
