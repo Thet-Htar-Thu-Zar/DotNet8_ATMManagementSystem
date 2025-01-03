@@ -1,4 +1,6 @@
-﻿using BAL.IServices;
+﻿using AutoMapper;
+using BAL.IServices;
+using BAL.Shared;
 using Model.ApplicationConfig;
 using Model.DTOs;
 using Model.Entities;
@@ -15,22 +17,33 @@ namespace BAL.Services
     public class UserServices : IUserServices
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public UserServices(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        private readonly JwtTokenProvider _jwtTokenProvider;
+        public UserServices(IUnitOfWork unitOfWork, IMapper mapper, JwtTokenProvider jwtTokenProvider)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _jwtTokenProvider = jwtTokenProvider;
         }
         public async Task CreateUser(CreateUserDTOs inputModel)
         {
             try
             {
+                string hashedPassword = "";
+                using (var sha256 = System.Security.Cryptography.SHA256.Create())
+                {
+                    var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputModel.Password));
+                    hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                }
+
                 var createUser = new Users()
                 {
                     UserName = inputModel.UserName,
-                    Password = inputModel.Password,
+                    Password = hashedPassword,
                     Amount = inputModel.Amount,
                     CreatedBy = inputModel.CreatedBy,
                 };
+                
                 await _unitOfWork.User.Add(createUser);
                 await _unitOfWork.SaveChangesAsync();
             }
@@ -39,6 +52,8 @@ namespace BAL.Services
                 throw;
             }
         }
+
+    
 
         public async Task DeleteUser(Guid id)
         {
@@ -60,13 +75,20 @@ namespace BAL.Services
 
         public async Task<IEnumerable<Users>> GetAllUsers()
         {
-            var lst = await _unitOfWork.User.GetByCondition(x => x.ActiveFlag == true);
-
-            if(lst == null || !lst.Any())
+            try
             {
-                throw new Exception("No active user list...");
+                var lst = await _unitOfWork.User.GetByCondition(x => x.ActiveFlag == true);
+
+                if (lst == null || !lst.Any())
+                {
+                    throw new Exception("No active user list...");
+                }
+                return lst;
             }
-            return lst;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<Users> GetUserById(Guid id)
@@ -86,6 +108,44 @@ namespace BAL.Services
                 }
 
                 return userlst;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> LoginUser(LoginUserDTOs inputModel)
+        {
+            try
+            {
+                string hashedPassword;
+               
+                if (string.IsNullOrEmpty(inputModel.UserName) && string.IsNullOrEmpty(inputModel.Password))
+                {
+                    throw new Exception ("UserName and Password must not empty...Pls, fill!");
+                }
+
+                using (var sha256 = System.Security.Cryptography.SHA256.Create())
+                {
+                    var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputModel.Password));
+                    hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                }
+
+                var checkUser = (await _unitOfWork.User
+                    .GetByCondition(x => x.UserName == inputModel.UserName && x.Password == hashedPassword))
+                    .FirstOrDefault();
+
+                if(checkUser is null)
+                {
+                    throw new Exception("UserName and Password is invalid...");
+                }
+
+                var role = checkUser.UserRole;
+
+                string token = _jwtTokenProvider.Create(checkUser, role);
+
+                return token;
             }
             catch (Exception)
             {

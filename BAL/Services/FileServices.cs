@@ -1,4 +1,5 @@
-﻿using Azure.Storage;
+﻿using AutoMapper;
+using Azure.Storage;
 using Azure.Storage.Blobs;
 using BAL.IServices;
 using Microsoft.AspNetCore.Http;
@@ -13,13 +14,15 @@ namespace BAL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly BlobContainerClient _fileContainer;
-        public FileServices(IUnitOfWork unitOfWork, IConfiguration configuration)
+        private readonly IMapper _mapper;
+        public FileServices(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             var credential = new StorageSharedKeyCredential(configuration["AppSettings:AzureStorageAccountName"], configuration["AppSettings:AzureAccessKey"]);
             var blobUri = $"https://{configuration["AppSettings:AzureStorageAccountName"]}.blob.core.windows.net";
             var blobServiceClient = new BlobServiceClient(new Uri(blobUri), credential);
             _fileContainer = blobServiceClient.GetBlobContainerClient(configuration["AppSettings:AzureContainer"]);
+            _mapper = mapper;
         }
 
         public async Task DeleteFile(string fileName)
