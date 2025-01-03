@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 using BAL.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Model.DTOs;
 using Model.Entities;
 using Repo.UnitOfWork;
 
@@ -38,6 +39,25 @@ namespace BAL.Services
                 throw;
             }
 
+        }
+
+        public async Task<FileResponseDTOs?> DownloadFile(string fileName)
+        {
+            BlobClient file = _fileContainer.GetBlobClient(fileName);
+
+            if(await file.ExistsAsync())
+            {
+                var data = await file.OpenReadAsync();
+                Stream blobContent = data;
+
+                var content = await file.DownloadContentAsync();
+
+                string name = fileName;
+                string contentType = content.Value.Details.ContentType;
+
+                return new FileResponseDTOs { Content = blobContent, FileName = name, Content_Type = contentType };
+            }
+            return null;
         }
 
         public async Task<Uri> FileUpload(IFormFile File)
