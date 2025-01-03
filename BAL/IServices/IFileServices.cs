@@ -7,7 +7,7 @@ namespace BAL.IServices
     {
         Task<IEnumerable<Files>> GetAllFiles();
         Task<Uri> FileUpload(IFormFile File);
-        //Task<bool> DeleteFile(string fileName);
+        Task DeleteFile(string fileName);
 
     }
 }

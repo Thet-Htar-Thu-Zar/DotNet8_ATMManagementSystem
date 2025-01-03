@@ -20,6 +20,26 @@ namespace BAL.Services
             var blobServiceClient = new BlobServiceClient(new Uri(blobUri), credential);
             _fileContainer = blobServiceClient.GetBlobContainerClient(configuration["AppSettings:AzureContainer"]);
         }
+
+        public async Task DeleteFile(string fileName)
+        {
+            try
+            {
+                var data = (await _unitOfWork.StoreFile.GetByCondition(x => x.FileName == fileName && x.ActiveFlag == true)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.ActiveFlag = false;
+
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         public async Task<Uri> FileUpload(IFormFile File)
         {
             try
@@ -61,7 +81,7 @@ namespace BAL.Services
                 throw;
             }
         }
-
         
+
     }
 }

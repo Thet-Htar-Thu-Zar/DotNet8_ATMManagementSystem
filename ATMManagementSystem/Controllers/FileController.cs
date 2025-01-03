@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using static Model.ApplicationConfig.ResponseModel;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ATMManagementSystem.Controllers
 {
@@ -48,6 +49,21 @@ namespace ATMManagementSystem.Controllers
                     return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful, Data = data });
                 }
                 return Ok(new ResponseModel { Message = Messages.InvalidPostedData, status = APIStatus.Error });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+        }
+
+        [HttpDelete("DeleteFile")]
+        public async Task<IActionResult> DeleteFile(string fileName)
+        {
+            try
+            {
+                await _fileServices.DeleteFile(fileName);
+                return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful });
 
             }
             catch (Exception ex)
