@@ -1,5 +1,9 @@
+using ATMManagementSystem;
 using BAL.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Model.ApplicationConfig;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var appSettings = new Appsetting();
@@ -10,9 +14,26 @@ builder.Services.AddControllers();
 builder.Configuration.GetSection("AppSettings").Bind(appSettings);
 ServiceManager.SetServicesInfo(builder.Services, appSettings);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddAutenticationService();
 
+builder.Services.AddSingleton<JwtTokenProvider>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(option =>
+    {
+        option.RequireHttpsMetadata = false;
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+//Add Mapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
