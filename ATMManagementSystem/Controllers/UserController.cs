@@ -38,6 +38,21 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [HttpPost("LoginUser")]
+        public async Task<IActionResult> LoginUser(LoginUserDTOs inputModel)
+        {
+            try
+            {
+                var data =  await _userServices.LoginUser(inputModel);
+                return Ok(new ResponseModel { Message = "Login Sucessfully", status = APIStatus.Successful, Data = data });
+            }
+
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+        }
+
         [HttpGet("GetAllUsers")]
         public async Task <IActionResult> GetAllUsers()
         {
