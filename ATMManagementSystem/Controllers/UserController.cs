@@ -1,4 +1,6 @@
-﻿using BAL.IServices;
+﻿using Asp.Versioning;
+using BAL.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using Model.DTOs;
@@ -10,8 +12,9 @@ using static Model.ApplicationConfig.ResponseModel;
 namespace ATMManagementSystem.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1")]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -53,6 +56,7 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllUsers")]
         public async Task <IActionResult> GetAllUsers()
         {
@@ -71,6 +75,7 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetUserById")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
@@ -86,6 +91,7 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTOs inputModel)
         {
@@ -102,8 +108,8 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteUser")]
-
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             try

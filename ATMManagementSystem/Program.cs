@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using ATMManagementSystem;
 using BAL.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +16,24 @@ builder.Configuration.GetSection("AppSettings").Bind(appSettings);
 ServiceManager.SetServicesInfo(builder.Services, appSettings);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutenticationService();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new QueryStringApiVersionReader("query-api-version"));
+    //new headerapiversionreader("x-version"),
+    //    new mediatypeapiversionreader("ver"));
+
+    //}).AddApiExplorer();
+})   .AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 builder.Services.AddSingleton<JwtTokenProvider>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
