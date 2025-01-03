@@ -41,6 +41,7 @@ namespace BAL.Services
                     UserName = inputModel.UserName,
                     Password = hashedPassword,
                     Amount = inputModel.Amount,
+                    UserRole = inputModel.UserRole,
                     CreatedBy = inputModel.CreatedBy,
                 };
                 
