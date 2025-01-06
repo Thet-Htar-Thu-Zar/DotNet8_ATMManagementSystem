@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model.DTOs
 {
-    public class TransactionDTO
-    {
+    public class CreateTransactionDTOs
+    {     
+            public Guid UserID { get; set; }
+            public decimal TransactionAmount { get; set; }
     }
 }
