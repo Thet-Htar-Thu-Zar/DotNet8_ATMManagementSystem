@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Configuration.GetSection("AppSettings").Bind(appSettings);
 ServiceManager.SetServicesInfo(builder.Services, appSettings);
-builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddAutenticationService();
 
 builder.Services.AddApiVersioning(options =>
@@ -24,8 +24,8 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
     options.ApiVersionReader = ApiVersionReader.Combine(
         new UrlSegmentApiVersionReader(),
-        new QueryStringApiVersionReader("query-api-version"));
-    //new headerapiversionreader("x-version"),
+    //new QueryStringApiVersionReader("query-api-version"));
+    new HeaderApiVersionReader("x-version"));
     //    new mediatypeapiversionreader("ver"));
 
     //}).AddApiExplorer();
@@ -54,13 +54,40 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Add Mapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v1",
+        Title = "API Version 1.0",
+        Description = "API Documentation for version 1.0"
+    });
+
+    options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v2",
+        Title = "API Version 2.0",
+        Description = "API Documentation for version 2.0"
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(
+        options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "API Version 1.0");
+            options.SwaggerEndpoint("/swagger/v2/swagger.json", "API Version 2.0");
+        }
+        );
 }
 app.UseSwagger();
 app.UseSwaggerUI();
