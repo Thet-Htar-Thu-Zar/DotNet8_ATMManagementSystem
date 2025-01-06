@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Model.Entities;
+using Model;
+using Repo.Repositories.IRepositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace Repo.Repositories.Repositories
 {
-    public class TransactionRepository
+    internal class TransactionRepository : GenericRepository<Transactions>, ITransactionRepository
     {
+        public TransactionRepository(DataContext context) : base(context)
+        {
+        }
     }
 }

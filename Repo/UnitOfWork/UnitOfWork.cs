@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Model;
 using Model.ApplicationConfig;
+using Model.Entities;
 using Repo.Repositories.IRepositories;
 using Repo.Repositories.Repositories;
 
@@ -16,6 +17,7 @@ namespace Repo.UnitOfWork
             Appsetting = appsettings.Value;
             User = new UserRepository(context);
             StoreFile = new FileRepository(context);
+            Transactions = new Transactions(context);
         }
         public IUserRepository User { get; set; }
         public IFileRepository StoreFile { get; set; }

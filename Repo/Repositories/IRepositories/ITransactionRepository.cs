@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Repo.Repositories.IRepositories
 {
-    public class ITransactionRepository
+    public interface ITransactionRepository : IGenericRepository<Transaction>
     {
     }
 }
