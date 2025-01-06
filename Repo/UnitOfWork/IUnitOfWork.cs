@@ -6,7 +6,7 @@ namespace Repo.UnitOfWork
     {
         IUserRepository User {  get; }
         IFileRepository StoreFile { get; }
-        ITransactionRepository Transactions { get; }
+        ITransactionRepository AllTransactions { get; }
         Task<int> SaveChangesAsync();
     }
 }

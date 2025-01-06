@@ -17,11 +17,14 @@ namespace Repo.UnitOfWork
             Appsetting = appsettings.Value;
             User = new UserRepository(context);
             StoreFile = new FileRepository(context);
-            Transactions = new Transactions(context);
+            AllTransactions = new TransactionRepository(context);
         }
         public IUserRepository User { get; set; }
         public IFileRepository StoreFile { get; set; }
         public Appsetting Appsetting { get; set; }
+
+        public ITransactionRepository AllTransactions { get; set; }
+
         public void Dispose()
         {
             _context.Dispose();
