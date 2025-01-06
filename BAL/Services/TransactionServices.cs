@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BAL.Services
 {
-    internal class TransactionServices
+    public class TransactionServices
     {
     }
 }
