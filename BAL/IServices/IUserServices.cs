@@ -1,10 +1,5 @@
 ﻿using Model.DTOs;
 using Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAL.IServices
 {
@@ -12,7 +7,7 @@ namespace BAL.IServices
     {
         Task CreateUser(CreateUserDTOs inputModel);
         Task<string> LoginUser(LoginUserDTOs inputModel);
-        Task<IEnumerable<Users>> GetAllUsers();
+        Task<IEnumerable<CreateUserDTOs>> GetAllUsers();
         Task<Users> GetUserById(Guid id);
         Task UpdateUser(UpdateUserDTOs inputModel);
         Task DeleteUser(Guid id);

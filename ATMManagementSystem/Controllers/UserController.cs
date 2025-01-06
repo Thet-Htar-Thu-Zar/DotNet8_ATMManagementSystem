@@ -63,9 +63,8 @@ namespace ATMManagementSystem.Controllers
             try
             {
                 var userList = await _userServices.GetAllUsers();
-                var activeUsers = userList.Where(p => p.ActiveFlag == true).ToList();
 
-                return Ok(new ResponseModel { Message = "Display Sucessfully", status = APIStatus.Successful, Data = activeUsers });
+                return Ok(new ResponseModel { Message = "Display Sucessfully", status = APIStatus.Successful, Data = userList });
 
             }
             catch (Exception ex)

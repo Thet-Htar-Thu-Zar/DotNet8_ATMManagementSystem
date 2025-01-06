@@ -1,7 +1,5 @@
 ﻿using Asp.Versioning;
 using BAL.IServices;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using static Model.ApplicationConfig.ResponseModel;

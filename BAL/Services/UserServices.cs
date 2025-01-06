@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using BAL.IServices;
 using BAL.Shared;
-using Model.ApplicationConfig;
 using Model.DTOs;
 using Model.Entities;
 using Repo.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Model.ApplicationConfig.ResponseModel;
 
 namespace BAL.Services
 {
@@ -71,17 +65,17 @@ namespace BAL.Services
             }
         }
 
-        public async Task<IEnumerable<Users>> GetAllUsers()
+        public async Task<IEnumerable<CreateUserDTOs>> GetAllUsers()
         {
             try
             {
                 var lst = await _unitOfWork.User.GetByCondition(x => x.ActiveFlag == true);
-
+                var user = _mapper.Map<IEnumerable<CreateUserDTOs>>(lst);
                 if (lst == null || !lst.Any())
                 {
                     throw new Exception("No active user list...");
                 }
-                return lst;
+                return user;
             }
             catch (Exception)
             {
