@@ -91,11 +91,11 @@ namespace BAL.Services
 
                 if (userlst is null)
                 {
-                    throw new Exception("Sale report doesn't exist....");
+                    throw new Exception("User doesn't exist....");
                 }
                 if (userlst.ActiveFlag != true)
                 {
-                    throw new Exception("Sale report doesn't exist....");
+                    throw new Exception("User doesn't exist....");
 
                 }
 
