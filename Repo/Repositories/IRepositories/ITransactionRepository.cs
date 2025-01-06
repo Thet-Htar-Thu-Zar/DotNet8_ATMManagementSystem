@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAL.IServices
+namespace Repo.Repositories.IRepositories
 {
-    public class ITransactionService
+    public class ITransactionRepository
     {
     }
 }

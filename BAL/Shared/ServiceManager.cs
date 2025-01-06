@@ -19,7 +19,7 @@ namespace BAL.Shared
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IFileServices, FileServices>();
-
+            services.AddScoped<ITransactionService, TransactionServices>();
         }
     }
 }
