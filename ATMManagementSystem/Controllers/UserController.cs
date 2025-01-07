@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using Model.DTOs;
-using Model.Entities;
 using Repo.UnitOfWork;
-using System.Net.NetworkInformation;
 using static Model.ApplicationConfig.ResponseModel;
 
 namespace ATMManagementSystem.Controllers

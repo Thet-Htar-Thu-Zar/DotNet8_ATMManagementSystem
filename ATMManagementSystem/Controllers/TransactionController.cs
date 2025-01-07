@@ -1,8 +1,6 @@
 ﻿using Asp.Versioning;
 using BAL.IServices;
-using BAL.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using Model.DTOs;
@@ -11,7 +9,7 @@ using static Model.ApplicationConfig.ResponseModel;
 
 namespace ATMManagementSystem.Controllers
 {
-    
+
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
@@ -44,6 +42,7 @@ namespace ATMManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("GetTransactionsByUserId")]
         public async Task<IActionResult> GetTransactionsById(Guid UserId)
         {
@@ -60,9 +59,9 @@ namespace ATMManagementSystem.Controllers
 
             }
         }
+
         [Authorize(Roles = "User")]
         [HttpPost("Deposit")]
-
         public async Task<IActionResult> Deposit(CreateTransactionDTOs inputModel)
         {
             try
