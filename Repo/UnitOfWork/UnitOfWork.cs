@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Model;
 using Model.ApplicationConfig;
-using Model.Entities;
 using Repo.Repositories.IRepositories;
 using Repo.Repositories.Repositories;
 
