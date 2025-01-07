@@ -47,6 +47,7 @@ namespace BAL.Services
                 throw;
             }
         }
+
         public async Task DeleteUser(Guid id)
         {
             try
