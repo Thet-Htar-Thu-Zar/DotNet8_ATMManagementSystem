@@ -156,10 +156,17 @@ namespace BAL.Services
                 {
                     throw new Exception("User is not active..");
                 }
+                
                 if (user_data != null)
                 {
+                    string updateHashedPassword = "";
+                    using (var sha256 = System.Security.Cryptography.SHA256.Create())
+                    {
+                        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputModel.Password));
+                        updateHashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                    }
                     user_data.UserName = inputModel.UserName;
-                    user_data.Password = inputModel.Password;
+                    user_data.Password = updateHashedPassword;
                     user_data.Amount = inputModel.Amount;
                     user_data.UpdatedBy = "Admin";
                     user_data.UpdatedDate = DateTime.UtcNow;
