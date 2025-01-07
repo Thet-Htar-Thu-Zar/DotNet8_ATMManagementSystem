@@ -1,19 +1,20 @@
 ﻿using Asp.Versioning;
 using BAL.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApplicationConfig;
 using static Model.ApplicationConfig.ResponseModel;
 
-namespace ATMManagementSystem.Controllers
+namespace ATMManagementSystem.Controllers.V2
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("2")]
-    public class FileController2 : ControllerBase
+    public class FileController : ControllerBase
     {
         private readonly IFileServices _fileServices;
-        public FileController2(IFileServices fileServices)
+        public FileController(IFileServices fileServices)
         {
             _fileServices = fileServices;
         }

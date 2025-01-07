@@ -73,7 +73,7 @@ builder.Services.AddSwaggerGen(options =>
         Title = "API Version 2.0",
         Description = "API Documentation for version 2.0"
     });
-});
+}); 
 
 var app = builder.Build();
 
