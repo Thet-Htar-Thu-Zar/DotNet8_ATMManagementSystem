@@ -15,7 +15,7 @@ namespace Model
             });
 
             modelBuilder.Entity<Transactions>()
-        .Property(t => t.TransactionAmount).HasPrecision(18, 4);
+                    .Property(t => t.TransactionAmount).HasPrecision(18, 4);
         }
         public DbSet<Users> User { get; set; }
         public DbSet<Files> StoredFile { get; set; }
